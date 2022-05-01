@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class PlayerMovement : MonoBehaviour
     CharacterController characterController;
     Animator animator;
     public float rotateSpeed;
+    public Slider healthBar;
+    int playerHealth = 10;
+    int maxHealth = 10;
     //public AudioClip audio;
-   //AudioSource audioSource;
+    //AudioSource audioSource;
 
     void Start()
     {
@@ -40,5 +44,22 @@ public class PlayerMovement : MonoBehaviour
         {
             characterController.SimpleMove(transform.forward*Time.deltaTime*inputZ);
         }
+    }
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "asteroid")
+        {
+            playerHealth--;
+            collision.gameObject.SetActive(false);
+            print("player Health Dec:" + playerHealth);
+
+        }
+        if (collision.gameObject.tag == "Health" && playerHealth < maxHealth)
+        {
+            playerHealth = Mathf.Clamp(playerHealth + 1, 0, maxHealth);
+            collision.gameObject.SetActive(false);
+            print("player Health inc:" + playerHealth);
+        }
+
     }
 }
