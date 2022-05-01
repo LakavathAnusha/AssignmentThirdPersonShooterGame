@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject enemy;
     float time;
+    float healthTime;
     //float healthTime;
    // PlayerMovement PlayerMovement;
     // Start is called before the first frame update
@@ -30,6 +31,16 @@ public class SpawnManager : MonoBehaviour
             }
             time = 0;
         }
-
+        healthTime = healthTime + Time.deltaTime;
+        if (healthTime > 3f)
+        {
+            GameObject tempHealth = (PoolScript.instance.GetObjectsFromPool("Health"));
+            if (tempHealth != null)
+            {
+                tempHealth.transform.position = new Vector3(Random.Range(-8.0f, 8f), 4f, Random.Range(-8.0f, 8f));
+                tempHealth.SetActive(true);
+            }
+            healthTime = 0;
+        }
     }
 }
