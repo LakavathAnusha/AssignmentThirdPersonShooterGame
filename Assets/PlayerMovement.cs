@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    AudioSource audio;
     // Start is called before the first frame update
     public float playerSpeed;
+    public GameObject bulletDirection;
     CharacterController characterController;
     Animator animator;
     public float rotateSpeed;
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController= GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        audio = GetComponent<AudioSource>();
         //audio = GetComponent<AudioClip>();
        // audioSource = GetComponent<AudioSource>();
     }
@@ -44,10 +47,26 @@ public class PlayerMovement : MonoBehaviour
         {
             characterController.SimpleMove(transform.forward*Time.deltaTime*inputZ);
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            audio.Play();
+          
+            RaycastHit hit;
+            if (Physics.Raycast(bulletDirection.transform.position, bulletDirection.transform.forward, out hit, 20f))
+            {
+                Debug.Log("Enemy RaycastHit");
+                GameObject enemyhit = hit.collider.gameObject;
+                if (enemyhit.tag == "Enemy")
+                {
+                    //enemyhit.SetActive(false);
+                    Destroy(enemyhit);
+                }
+            }
+        }
     }
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "asteroid")
+        if (collision.gameObject.tag == "Enemy")
         {
             playerHealth--;
             collision.gameObject.SetActive(false);
@@ -60,6 +79,5 @@ public class PlayerMovement : MonoBehaviour
             collision.gameObject.SetActive(false);
             print("player Health inc:" + playerHealth);
         }
-
     }
 }
