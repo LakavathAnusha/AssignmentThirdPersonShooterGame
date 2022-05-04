@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
             GameObject tempHealth = (PoolScript.instance.GetObjectsFromPool("Health"));
             if (tempHealth != null)
             {
-                tempHealth.transform.position = new Vector3(Random.Range(-8.0f, 8f), 4f, Random.Range(-8.0f, 8f));
+                tempHealth.transform.position = new Vector3(Random.Range(-8.0f, 8f), 1f, Random.Range(-8.0f, 8f));
                 tempHealth.SetActive(true);
             }
             healthTime = 0;

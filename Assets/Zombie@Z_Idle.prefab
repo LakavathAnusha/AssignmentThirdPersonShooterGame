@@ -2178,6 +2178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8812150782058179110}
+  - component: {fileID: 4795283106026718551}
   - component: {fileID: 1441085014933732211}
   m_Layer: 0
   m_Name: Zombie@Z_Idle
@@ -2215,6 +2216,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4795283106026718551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480974936758868021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83c1302fb15b8a4a980a5ff3b24239b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &1441085014933732211
 Rigidbody:
   m_ObjectHideFlags: 0
