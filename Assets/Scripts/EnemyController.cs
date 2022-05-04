@@ -100,10 +100,10 @@ public class EnemyController : MonoBehaviour
         if(currentTime<0)
         {
             player.playerHealth--;
-           if (player.playerHealth == 0)
-            {
+          // if (player.playerHealth == 0)
+          //  {
 
-                youLost.GetComponent<Text>().enabled = true;
+              //  youLost.GetComponent<Text>().enabled = true;
                 /*playAgain.GetComponent<Image>().enabled = true;
                 // playAgain.GetComponent<Text>().enabled = true;
 
@@ -111,7 +111,7 @@ public class EnemyController : MonoBehaviour
                 taptoPlay.GetComponent<Text>().enabled = true;
                 player.isGameOver = true;*/
 
-            }
+            //}
             currentTime = attackTime;
 
         }

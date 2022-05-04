@@ -24,9 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public Text taptoPlay;
     public bool isGameOver = false;
     public GameObject bulletExplosion;
-   // public Text youLost;
+    public Text youLost;
+    // public Text youLost;
     //public AudioClip audio;
     //AudioSource audioSource;
+    EnemySpawning spawning;
 
     void Start()
     {
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         audio = GetComponent<AudioSource>();
         Enemy = GameObject.Find("Enemy").GetComponent<EnemyController>();
+        spawning =GameObject.Find("SpawnPoint").GetComponent<EnemySpawning>();
         //audio = GetComponent<AudioClip>();
        // audioSource = GetComponent<AudioSource>();
        
@@ -107,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
                    isGameOver = true;
                 }*/
             }
+            if(playerHealth==0)
+                {
+                    youLost.GetComponent<Text>().enabled = true;
+                   isGameOver = true;
+                }
         }
     }
    
@@ -117,6 +125,15 @@ public class PlayerMovement : MonoBehaviour
             playerHealth = Mathf.Clamp(playerHealth + 1, 0,maxHealth);
             collision.gameObject.SetActive(false);
             print("player Health inc:" + playerHealth);
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag=="Spawnpoint")
+        {
+            print("collider hit");
+            spawning.CreateAllZombies();
+            other.gameObject.SetActive(false);
         }
     }
 }

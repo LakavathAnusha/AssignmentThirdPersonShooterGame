@@ -29,5 +29,6 @@ public class SpawnManager : MonoBehaviour
             }
             healthTime = 0;
         }
+
     }
 }
