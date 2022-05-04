@@ -1,2 +1,5 @@
 Third Person Shooter Game:
 1.Designing A Terrain.
+2.Player Movement
+3.Zombie animation.
+4.Zombies Spawning while Player enter into SpawnPoint.

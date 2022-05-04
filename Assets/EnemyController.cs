@@ -9,11 +9,14 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     public Transform target;
+    public GameObject ragdollPrefab;
     public enum STATE
     {
-        IDLE, WALK, RUN, ATTACK
+        IDLE, RUN, ATTACK
     }
     public STATE state = STATE.IDLE;
+  
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -23,7 +26,6 @@ public class EnemyController : MonoBehaviour
         {
             target = GameObject.Find("Player").GetComponent<Transform>();
         }
-        // = target.GetComponent<>();
     }
 
     // Update is called once per frame
@@ -37,9 +39,9 @@ public class EnemyController : MonoBehaviour
             case STATE.RUN:
                 Run();
                 break;
-            case STATE.WALK:
-                Walk();
-                break;
+            //case STATE.WALK:
+               // Walk();
+                //break;
             case STATE.ATTACK:
                 Attack();
                 break;
@@ -51,7 +53,7 @@ public class EnemyController : MonoBehaviour
     public void Idle()
     {
         AllAnimationFalse();
-        if (GetDistance() < 15f)
+        if(Vector3.Distance(target.transform.position,this.transform.position)<20f)
         {
             state = STATE.RUN;
         }
@@ -60,37 +62,18 @@ public class EnemyController : MonoBehaviour
     {
         AllAnimationFalse();
         animator.SetBool("IsRun", true);
-        agent.stoppingDistance = 4f;
+        agent.stoppingDistance = 5f;
         /*if (playerController.IsGameover == false)
         {
             agent.SetDestination(target.transform.position);
         }*/
+        agent.SetDestination(target.transform.position);
 
-
-        if (GetDistance() < agent.stoppingDistance + 1f)
+        if (Vector3.Distance(target.transform.position,this.transform.position)< agent.stoppingDistance + 1f)
         {
             state = STATE.ATTACK;
         }
-        if (GetDistance() > 20f)
-        {
-            state = STATE.WALK;
-        }
-        if(GetDistance()>30f)
-        {
-            state = STATE.IDLE;
-        }
-    }
-    public void Walk()
-    {
-        AllAnimationFalse();
-        animator.SetBool("IsWalk", true);
-      //  agent.stoppingDistance = 6f;
-        /*if (playerController.IsGameover == false)
-        {
-            agent.SetDestination(target.transform.position);
-        }*/
-
-        if (GetDistance() > 30f)
+        if(Vector3.Distance(target.transform.position,this.transform.position)>30f)
         {
             state = STATE.IDLE;
         }
@@ -98,32 +81,23 @@ public class EnemyController : MonoBehaviour
     public void Attack()
     {
         AllAnimationFalse();
-        animator.SetBool("IsAttack", true);
+            animator.SetBool("IsAttack", true);
         transform.LookAt(target.transform.position);
-
-        if (GetDistance() > agent.stoppingDistance)
+        if (Vector3.Distance(target.transform.position,this.transform.position)>agent.stoppingDistance+1f)
+        {
+            state = STATE.RUN;
+        }
+        if (Vector3.Distance(target.transform.position, this.transform.position) > 30f)
         {
             state = STATE.IDLE;
         }
-
-
     }
+
     public void AllAnimationFalse()
     {
         animator.SetBool("IsAttack", false);
-        animator.SetBool("IsWalk", false);
+       // animator.SetBool("IsWalk", false);
         animator.SetBool("IsRun", false);
 
-    }
-  /*  public void Dead()
-    {
-        AllAnimationFalse();
-        animator.SetBool("IsDead", true);
-    }*/
-    public float GetDistance()
-    {
-       // if (playerController.IsGameover == true)
-            //return Mathf.Infinity;
-        return (Vector3.Distance(target.position, this.transform.position));
     }
 }
