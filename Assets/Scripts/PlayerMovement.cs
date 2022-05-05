@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     //public AudioClip audio;
     //AudioSource audioSource;
     EnemySpawning spawning;
+    Deva deva;
 
     void Start()
     {
@@ -37,9 +38,10 @@ public class PlayerMovement : MonoBehaviour
         audio = GetComponent<AudioSource>();
         Enemy = GameObject.Find("Enemy").GetComponent<EnemyController>();
         spawning =GameObject.Find("SpawnPoint").GetComponent<EnemySpawning>();
+        deva = GameObject.Find("Player").GetComponentInChildren<Deva>();
         //audio = GetComponent<AudioClip>();
-       // audioSource = GetComponent<AudioSource>();
-       
+        // audioSource = GetComponent<AudioSource>();
+
     }
    
     // Update is called once per frame
@@ -50,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
             float inputX = Input.GetAxis("Horizontal") * playerSpeed;        //Movement of the player in horizontal direction
             float inputZ = Input.GetAxis("Vertical") * playerSpeed;
             Vector3 movement = new Vector3(inputX * Time.deltaTime, 0f, inputZ * Time.deltaTime);
+            deva.ApplyScale(inputZ);
         
         healthBar.value = (float)playerHealth / 10f;
 
@@ -83,7 +86,8 @@ public class PlayerMovement : MonoBehaviour
 
                         newTempRd.transform.Find("Hips").GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 10000);
 
-                        Destroy(enemyhit);
+                        // Destroy(enemyhit);
+                        enemyhit.SetActive(false);
                         GameObject temp = Instantiate(bulletExplosion, enemyhit.transform.position, Quaternion.identity);
                         Destroy(temp, 0.3f);
                         zombie++;
